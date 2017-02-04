@@ -4,10 +4,14 @@
 
 html {
     background: #ffc600;
-    font-family: 'Roboto Slab', serif;
+    font-family: 'Inconsolata', monospace;
     font-size: 20px;
     font-weight: 200;
     text-align: center;
+}
+
+body {
+    font-family: 'Inconsolata', monospace;
 }
 
 .Site {
@@ -27,10 +31,10 @@ a {
     text-decoration: none;
 }
 
-/*input {
-    padding: 20px;
-    margin: 20px auto;
-}*/
+h1 {
+    color: #0FA3B1;
+    text-transform: uppercase;
+}
 
 label {
     width: 50%;
@@ -53,7 +57,7 @@ input.people-select,
 input.shapes-select {
     margin: 20px auto;
     padding: 20px;
-    width: 50%;
+    width: 60%;
     text-align: center;
     outline: 0;
     border: 0;
@@ -62,7 +66,7 @@ input.shapes-select {
     top: 10px;
     z-index: 2;
     border-radius: 5px;
-    font-family: 'Roboto Slab', serif;
+    font-family: 'Inconsolata', monospace;
     font-size: 40px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.12) inset 0 0 2px rgba(0, 0, 0, 0.19);
 }
@@ -80,7 +84,15 @@ button:first-of-type {
 }
 
 .footer {
-    font-family: 'Roboto Slab', serif;
+    font-family: 'Inconsolata', monospace;
     letter-spacing: 0.1em;
     text-align: center;
+}
+
+@media all and (max-width: 799px) {
+    input.people-select,
+    input.shapes-select {
+        width: 100%;
+        font-size: 24px;
+    }
 }
