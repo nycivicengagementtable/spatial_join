@@ -1,17 +1,32 @@
 from flask import Flask
 from flask import render_template
 app = Flask(__name__)
-from flask import request
+from flask import request, send_file
 import pdb
+import intersect
+import tempfile
 
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        people, shapes = request.files["people"].read(), request.files["shapes"].read()
-        pdb.set_trace()
-        # f = request.files['the_file']
-        f.save('/var/www/uploads/')
+        with tempfile.NamedTemporaryFile() as people_file:
+            request.files["people"].save(people_file.name)
+            people = intersect.people_df(people_file.name)
+
+            with tempfile.NamedTemporaryFile() as shapes_file:
+                request.files["shapes"].save(shapes_file.name)
+                shapes = intersect.shapes_df(shapes_file.name)
+
+                # pdb.set_trace()
+                print("Merging...")
+                merged = intersect.merge(shapes, people)
+
+                with tempfile.NamedTemporaryFile() as merged_file:
+                    print("Converting to CSV...")
+                    merged.to_csv(merged_file.name)
+                    return send_file(merged_file.name)
+
     if request.method == "GET":
         return render_template('index.html')
 
