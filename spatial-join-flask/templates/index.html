@@ -5,25 +5,27 @@
     <meta charset="utf-8">
     <title>Spatial Join</title>
     <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
-    <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='styles/style.css')}}">
 </head>
 
 <body>
     <body class="Site">
         <h1>Spatial Join</h1>
         <div class="intro">
-            <p>This tool allows you to add geo-location datato your database.</p>
+            <p>This tool allows you to add geo-location data to your database.</p>
         </div>
         <main class="Site-content">
             <h1>Upload new File</h1>
             <form method="post" enctype="multipart/form-data" class="upload-form">
                 <div class="people">
-                    <label for="file-select">Upload People CSV</label>
+                    <b><label for="file-select">Upload People CSV</label></b>
                     <input type="file" id="people-select" name="people" class="people-select" accept=".csv">
                 </div>
                 <div class="shapes">
-                    <label for="shapes-select">Upload Shape File</label>
-                    <input type="file" name="shapes" id="shapes-select" class="shapes-select" accept=".csv">
+                    <b><label for="shapes-select">Upload GeoJSON</label></b>
+                    <p>Convert your shape files (.shp) to GeoJSON using: <a href="https://ogre.adc4gis.com">ogr2ogr</a>.</p>
+                    <p>For reference, NYC SRS is EPSG:2263.</p>
+                    <input type="file" name="shapes" id="shapes-select" class="shapes-select" accept=".geojson, .json">
                 </div>
               <button type="submit" class="btn" value="Upload">Submit</button>
             </form>

@@ -18,7 +18,6 @@ def index():
                 request.files["shapes"].save(shapes_file.name)
                 shapes = intersect.shapes_df(shapes_file.name)
 
-                # pdb.set_trace()
                 print("Merging...")
                 merged = intersect.merge(shapes, people)
 
