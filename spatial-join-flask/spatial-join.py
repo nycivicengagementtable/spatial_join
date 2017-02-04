@@ -1,7 +1,6 @@
 from flask import Flask
-from flask import render_template
+from flask import render_template, request, redirect
 app = Flask(__name__)
-from flask import request
 import pdb
 
 
@@ -9,9 +8,8 @@ import pdb
 def index():
     if request.method == 'POST':
         people, shapes = request.files["people"].read(), request.files["shapes"].read()
-        pdb.set_trace()
-        # f = request.files['the_file']
-        f.save('/var/www/uploads/')
+        # people.save('/var/www/uploads/')
+        return redirect("/results")
     if request.method == "GET":
         return render_template('index.html')
 
