@@ -14,12 +14,24 @@
             <p>This tool allows you to add geo-location datato your database.</p>
         </div>
         <main class="Site-content">
-            <form class="upload-form">
-                <label for="file-select">Enter People CSV</label>
-                <input type="file" id="people-select" class="people-select" enctype="multipart/form-data" accept=".csv">
-                <label for="file-select">Enter Shapes CSV</label>
-                <input type="file" id="shapes-select" class="shapes-select" enctype="multipart/form-data" accept=".csv">
+            <h1>Upload new File</h1>
+            <form method="post" enctype="multipart/form-data">
+              <p><input type="file" name="people">
+              <p><input type="file" name="shapes">
+              <input type="submit" value="Upload">
             </form>
+            <!-- <form action="#" method="post" enctype="multipart/form-data" class="upload-form">
+                <div class="people">
+                    <label for="file-select">Enter People CSV</label>
+                    <input type="file" id="people-select" name="file1" class="people-select" accept=".csv">
+                </div>
+                <div class="shapes">
+                    <label for="shapes-select">Enter Shape CSV</label>
+                    <input type="file" id="shapes-select" name="file2" class="shapes-select" accept=".csv">
+                </div>
+                <br>
+                <button type="submit" class="btn" value="Upload">SUBMIT</button>
+            </form> -->
         </main>
 
         <footer class="footer">
