@@ -40,6 +40,8 @@ label {
     width: 50%;
     height: 30px;
     display: inline-block;
+    font-weight: bold;
+    font-size: 24px;
 }
 
 input {
