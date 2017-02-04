@@ -24,7 +24,7 @@ def index():
                 with tempfile.NamedTemporaryFile() as merged_file:
                     print("Converting to CSV...")
                     merged.to_csv(merged_file.name)
-                    return send_file(merged_file.name)
+                    return send_file(merged_file.name, mimetype='text/csv')
 
     if request.method == "GET":
         return render_template('index.html')
