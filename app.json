@@ -1,0 +1,12 @@
+{
+  "name": "Spatial Join",
+  "repository": "https://github.com/nycivicengagementtable/spatial_join",
+  "buildpacks": [
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-apt"
+    },
+    {
+      "url": "heroku/python"
+    }
+  ]
+}
