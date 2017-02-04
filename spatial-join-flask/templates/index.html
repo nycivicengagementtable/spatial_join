@@ -18,11 +18,11 @@
             <h1>Upload new File</h1>
             <form method="post" enctype="multipart/form-data" class="upload-form">
                 <div class="people">
-                    <label for="file-select">Upload People CSV</label>
+                    <label class="bolded" for="people-select">Upload People CSV</label>
                     <input type="file" id="people-select" name="people" class="people-select" accept=".csv">
                 </div>
                 <div class="shapes">
-                    <b><label for="shapes-select">Upload GeoJSON</label></b>
+                    <label class="bolded" for="shapes-select">Upload GeoJSON</label>
                     <p>Convert your shape files (.shp) to GeoJSON using: <a href="https://ogre.adc4gis.com">ogr2ogr</a>.</p>
                     <p>For reference, NYC SRS is EPSG:2263.</p>
                     <input type="file" name="shapes" id="shapes-select" class="shapes-select" accept=".geojson, .json">
