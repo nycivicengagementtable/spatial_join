@@ -10,3 +10,9 @@
     ```
 
 1. Open http://localhost:8000.
+
+## Running tests
+
+```sh
+docker build -t spatial_join . && docker run -it spatial_join pytest -v
+```
