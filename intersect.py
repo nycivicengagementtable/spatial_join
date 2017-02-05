@@ -3,14 +3,16 @@ import geopandas as gpd
 import pandas as pd
 from shapely.geometry import Point
 
+EPSG = 2263
+
 CRS = {
     'proj': 'latlong',
-    'init': 'epsg:2263'
+    'init': 'epsg:{:d}'.format(EPSG)
 }
 
 
 def shapes_df(path):
-    zones = gpd.read_file(path).to_crs(fiona.crs.from_epsg(2263))
+    zones = gpd.read_file(path).to_crs(fiona.crs.from_epsg(EPSG))
     return zones.to_crs(CRS)
 
 
