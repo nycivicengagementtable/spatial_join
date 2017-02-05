@@ -14,10 +14,16 @@ def shapes_df(path):
     return zones.to_crs(CRS)
 
 
+def to_point(person):
+    lat = float(person.Longitude)
+    lng = float(person.Latitude)
+    return Point((lat, lng))
+
+
 def people_df(path):
     f = pd.read_csv(path)
     df = pd.DataFrame(f)
-    df['geometry'] = df.apply(lambda x: Point((float(x.Longitude), float(x.Latitude))), axis=1)
+    df['geometry'] = df.apply(lambda x: to_point(x), axis=1)
     df = gpd.GeoDataFrame(df, geometry='geometry')
     points = df
     points.crs = CRS
