@@ -6,5 +6,5 @@
 1. Run the application.
 
     ```sh
-    docker build -t spatial_join . && docker run -it -p 8000:8000 spatial_join
+    docker build -t spatial_join . && docker run -it -p 8000:8000 -e PORT=8000 spatial_join
     ```

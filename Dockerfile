@@ -16,4 +16,5 @@ COPY . /usr/src/app
 
 EXPOSE 8000
 
-CMD gunicorn --bind 0.0.0.0:8000 app:app
+# https://devcenter.heroku.com/articles/container-registry-and-runtime#get-the-port-from-the-environment-variable
+CMD gunicorn --bind 0.0.0.0:$PORT app:app
