@@ -14,7 +14,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . /usr/src/app
 
-EXPOSE 8000
-
+# default - will be overridden in Heroku
 # https://devcenter.heroku.com/articles/container-registry-and-runtime#get-the-port-from-the-environment-variable
+ENV PORT 8000
+EXPOSE ${PORT}
 CMD gunicorn --bind 0.0.0.0:$PORT app:app
