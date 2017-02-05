@@ -1,15 +1,18 @@
-import rtree
 import fiona.crs
 import geopandas as gpd
 import pandas as pd
 from shapely.geometry import Point
 
-CRS = {'proj' : 'latlong', 'init': 'epsg:2263'}
+CRS = {
+    'proj': 'latlong',
+    'init': 'epsg:2263'
+}
+
 
 def shapes_df(path):
-    # index = rtree.Rtree()
     zones = gpd.read_file(path).to_crs(fiona.crs.from_epsg(2263))
     return zones.to_crs(CRS)
+
 
 def people_df(path):
     f = pd.read_csv(path)
@@ -20,11 +23,8 @@ def people_df(path):
     points.crs = CRS
     return points
 
-def merge(shapes, people):
-    merged = gpd.sjoin(people, shapes, how = 'left', op = 'intersects')
 
+def merge(shapes, people):
+    merged = gpd.sjoin(people, shapes, how='left', op='intersects')
     del merged['index_right']
-    # merged.groupby('DEVELOPMEN').count().sort_values('Internal Contact ID', ascending = False).head()
-    # print(merged.head())
-    # zones.head()
     return merged
