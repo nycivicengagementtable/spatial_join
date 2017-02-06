@@ -1,30 +1,52 @@
-import rtree
 import fiona.crs
 import geopandas as gpd
 import pandas as pd
+import re
 from shapely.geometry import Point
 
-CRS = {'proj' : 'latlong', 'init': 'epsg:2263'}
+EPSG = 2263
+
+CRS = {
+    'proj': 'latlong',
+    'init': 'epsg:{:d}'.format(EPSG)
+}
+
+LAT_REGEX = re.compile('\\blat(itude)?\\b', flags=re.I)
+LNG_REGEX = re.compile('\\blo?ng(itude)?\\b', flags=re.I)
+
 
 def shapes_df(path):
-    # index = rtree.Rtree()
-    zones = gpd.read_file(path).to_crs(fiona.crs.from_epsg(2263))
+    zones = gpd.read_file(path).to_crs(fiona.crs.from_epsg(EPSG))
     return zones.to_crs(CRS)
+
+
+def find_key(keys, regex):
+    results = filter(regex.match, keys)
+    return next(results, None)
+
+
+def to_point(person):
+    keys = person.keys()
+    lat_key = find_key(keys, LAT_REGEX)
+    lng_key = find_key(keys, LNG_REGEX)
+
+    lat = float(person[lat_key])
+    lng = float(person[lng_key])
+    return Point((lng, lat))
+
 
 def people_df(path):
     f = pd.read_csv(path)
     df = pd.DataFrame(f)
-    df['geometry'] = df.apply(lambda x: Point((float(x.Longitude), float(x.Latitude))), axis=1)
+    df['geometry'] = df.apply(lambda x: to_point(x), axis=1)
     df = gpd.GeoDataFrame(df, geometry='geometry')
     points = df
     points.crs = CRS
     return points
 
-def merge(shapes, people):
-    merged = gpd.sjoin(people, shapes, how = 'left', op = 'intersects')
 
+def merge(shapes, people):
+    merged = gpd.sjoin(people, shapes, how='left', op='intersects')
+    del merged['geometry']
     del merged['index_right']
-    # merged.groupby('DEVELOPMEN').count().sort_values('Internal Contact ID', ascending = False).head()
-    # print(merged.head())
-    # zones.head()
     return merged
