@@ -1,6 +1,7 @@
 import fiona.crs
 import geopandas as gpd
 import pandas as pd
+import re
 from shapely.geometry import Point
 
 EPSG = 2263
@@ -10,16 +11,28 @@ CRS = {
     'init': 'epsg:{:d}'.format(EPSG)
 }
 
+LAT_REGEX = re.compile('\\blat(itude)?\\b', flags=re.I)
+LNG_REGEX = re.compile('\\blo?ng(itude)?\\b', flags=re.I)
+
 
 def shapes_df(path):
     zones = gpd.read_file(path).to_crs(fiona.crs.from_epsg(EPSG))
     return zones.to_crs(CRS)
 
 
+def find_key(keys, regex):
+    results = filter(regex.match, keys)
+    return next(results, None)
+
+
 def to_point(person):
-    lat = float(person.Longitude)
-    lng = float(person.Latitude)
-    return Point((lat, lng))
+    keys = person.keys()
+    lat_key = find_key(keys, LAT_REGEX)
+    lng_key = find_key(keys, LNG_REGEX)
+
+    lat = float(person[lat_key])
+    lng = float(person[lng_key])
+    return Point((lng, lat))
 
 
 def people_df(path):

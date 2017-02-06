@@ -6,6 +6,8 @@ from pytest import approx
 
 @pytest.mark.parametrize('headings', [
     (['ID', 'Latitude', 'Longitude']),
+    (['ID', 'Latitude ', 'longitude']),
+    (['ID', 'lat', 'lng']),
 ])
 def test_to_point(headings):
     # the numbers are arbitrary
