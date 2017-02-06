@@ -47,5 +47,6 @@ def people_df(path):
 
 def merge(shapes, people):
     merged = gpd.sjoin(people, shapes, how='left', op='intersects')
+    del merged['geometry']
     del merged['index_right']
     return merged
