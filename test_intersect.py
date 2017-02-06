@@ -22,3 +22,16 @@ def test_to_point(headings):
 
     assert point.x == approx(lng)
     assert point.y == approx(lat)
+
+
+@pytest.mark.parametrize('people_path,num_nulls', [
+    ('sample_data/people/cvh_people_small.csv', 0),
+    ('sample_data/people/cvh_people_with_missing.csv', 1),
+])
+def test_merge(people_path, num_nulls):
+    people = people_df(people_path)
+    shapes = shapes_df('sample_data/shapes/nycha.json')
+
+    merged = merge(shapes, people)
+    nulls = merged[merged['BoroCD'].isnull()]
+    assert len(nulls) == num_nulls
