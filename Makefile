@@ -11,3 +11,6 @@ run: build
 
 test: build
 	docker run -it $(IMAGE) pytest -v
+
+cli: build
+	docker run -it $(IMAGE) python
