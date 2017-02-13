@@ -10,6 +10,7 @@ import random
     (['ID', 'Latitude ', 'longitude']),
     (['ID', 'lat', 'lng']),
 ])
+
 def test_to_point(headings):
     # the numbers are arbitrary
     person_id = random.randint(1, 10)

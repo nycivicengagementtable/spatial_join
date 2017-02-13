@@ -3,6 +3,7 @@ import geopandas as gpd
 import pandas as pd
 import re
 from shapely.geometry import Point
+import pdb
 
 EPSG = 2263
 
@@ -22,7 +23,8 @@ def shapes_df(path):
 
 def find_key(keys, regex):
     results = filter(regex.match, keys)
-    return next(results, None)
+    results_iter = (result for result in results)
+    return next(results_iter, None)
 
 
 def to_point(person):
@@ -46,6 +48,7 @@ def people_df(path):
 
 
 def merge(shapes, people):
+    pdb.set_trace()
     merged = gpd.sjoin(people, shapes, how='left', op='intersects')
     del merged['geometry']
     del merged['index_right']
