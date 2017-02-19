@@ -16,10 +16,11 @@ LAT_REGEX = re.compile('\\blat(itude)?\\b', flags=re.I)
 LNG_REGEX = re.compile('\\blo?ng(itude)?\\b', flags=re.I)
 
 
-def shapes_df(path):
-    zones = gpd.read_file(path).to_crs(fiona.crs.from_epsg(EPSG))
-    return zones.to_crs(CRS)
-
+def shapes_df(path, crs=CRS, epsg=EPSG):
+    raw_shapes = gpd.read_file(path)
+    zones = raw_shapes.to_crs(fiona.crs.from_epsg(epsg))
+    zones_crs = zones.to_crs(crs)
+    return zones_crs
 
 def find_key(keys, regex):
     results = filter(regex.match, keys)
@@ -37,18 +38,18 @@ def to_point(person):
     return Point((lng, lat))
 
 
-def people_df(path):
+def people_df(path, crs=CRS):
     f = pd.read_csv(path)
     df = pd.DataFrame(f)
     df['geometry'] = df.apply(lambda x: to_point(x), axis=1)
     df = gpd.GeoDataFrame(df, geometry='geometry')
     points = df
-    points.crs = CRS
+    points.crs = crs
     return points
 
 
 def merge(shapes, people):
-    pdb.set_trace()
+    # pdb.set_trace()
     merged = gpd.sjoin(people, shapes, how='left', op='intersects')
     del merged['geometry']
     del merged['index_right']
