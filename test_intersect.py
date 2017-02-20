@@ -30,13 +30,10 @@ def test_to_point(headings):
     ('sample_data/people/cvh_people_with_missing.csv', 1),
 ])
 
-def test_merge_within(people_path, num_nulls):
+def test_merge(people_path, num_nulls):
     people = people_df(people_path)
     shapes = shapes_df('sample_data/shapes/nycha.json')
-
     merged = merge_within(shapes, people)
-    assert len(merged["Internal Contact ID"]) == len(merged["BoroCD"])
 
-    # because I had to break out the multipolygons across multiple rows, I had to change `merged_within` to drop all shape categorical data that was null
-    # thus, I changed the assertion to account for the differences in original vs merged df length
-    assert len(people) - len(merged) == num_nulls
+    assert len(merged["Internal Contact ID"]) == len(merged["BoroCD"])
+    assert len(merged[merged["BoroCD"].isnull()]) == num_nulls

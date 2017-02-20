@@ -72,7 +72,9 @@ def people_df(path):
 # merge people and shape files
 
 def merge_within(shapes, people):
+    """Merge people csv geodataframe and shapes geodataframe, retaining all people data despite match rate."""
+    # Per http://geopandas.org/mergingdata.html, "within", "intersects", and "contains" are the same, but only "within" and "intersects" results in the same number of rows upon merge, and "within" was most consistent.
     merged = gpd.sjoin(people, shapes, how='left', op='within')
     del merged['geometry']
     del merged['index_right']
-    return merged.dropna()
+    return merged
