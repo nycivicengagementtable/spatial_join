@@ -1,4 +1,4 @@
-# Spatial Join
+# Spatial Join [![Build Status](https://travis-ci.org/nycivicengagementtable/spatial_join.svg?branch=master)](https://travis-ci.org/nycivicengagementtable/spatial_join)
 
 ## Running locally
 
