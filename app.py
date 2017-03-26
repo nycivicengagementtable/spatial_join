@@ -20,7 +20,7 @@ def index():
                 shapes = intersect.shapes_df(shapes_file.name)
 
                 print("Merging...")
-                merged = intersect.merge(shapes, people)
+                merged = intersect.merge_within(shapes, people)
 
                 with tempfile.NamedTemporaryFile() as merged_file:
                     print("Converting to CSV...")

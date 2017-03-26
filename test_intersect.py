@@ -10,6 +10,7 @@ import random
     (['ID', 'Latitude ', 'longitude']),
     (['ID', 'lat', 'lng']),
 ])
+
 def test_to_point(headings):
     # the numbers are arbitrary
     person_id = random.randint(1, 10)
@@ -24,14 +25,15 @@ def test_to_point(headings):
     assert point.y == approx(lat)
 
 
-@pytest.mark.parametrize('people_path,num_nulls', [
+@pytest.mark.parametrize('people_path, num_nulls', [
     ('sample_data/people/cvh_people_small.csv', 0),
     ('sample_data/people/cvh_people_with_missing.csv', 1),
 ])
+
 def test_merge(people_path, num_nulls):
     people = people_df(people_path)
     shapes = shapes_df('sample_data/shapes/nycha.json')
+    merged = merge_within(shapes, people)
 
-    merged = merge(shapes, people)
-    nulls = merged[merged['BoroCD'].isnull()]
-    assert len(nulls) == num_nulls
+    assert len(merged["Internal Contact ID"]) == len(merged["BoroCD"])
+    assert len(merged[merged["BoroCD"].isnull()]) == num_nulls
